@@ -1,16 +1,12 @@
 from huggingface_hub import hf_hub_download
 from llama_cpp import Llama
-
-# model_name_or_path = "TheBloke/Llama-2-13B-chat-GGML"
+from openai import OpenAI
 class LLAMA():
     def __init__(self):
         self.model_name_or_path = "TheBloke/Llama-2-13B-chat-GGML"
         self.model_basename = "llama-2-13b-chat.ggmlv3.q5_1.bin"
         self.model_path = None
         self.model_path = hf_hub_download(repo_id=self.model_name_or_path, filename=self.model_basename)
-
-        print("*******************")
-        print("*******************")
 
         self.lcpp_llm = None
         self.lcpp_llm = Llama(
@@ -21,16 +17,15 @@ class LLAMA():
             n_ctx=4096, # Context window
         )
 
-    def getFiveQuestions(self):
-
-        prompt = "Given the following caption, generate 5 questions about the picture that you can ask a Visual Question and Answer Model. |a photography of a dog running in a field|"
+    def getFiveQuestions(self, caption):
+        prompt = f"Given the following caption, generate 5 questions about the picture that you can ask a Visual Question and Answer Model. |{caption}|"
         prompt_template=f'''SYSTEM: You are a helpful, respectful and honest assistant. Always answer as helpfully.
 
         USER: {prompt}
 
         ASSISTANT:
         '''
-
+        print("Getting response from LLaMA...")
         response = self.lcpp_llm(
             prompt=prompt_template,
             max_tokens=128,
@@ -49,14 +44,9 @@ class LLAMA():
         
         return questionsArr
 
-
-
-import openai
-from openai import OpenAI
-
 class GPT():
     def __init__(self):
-        self.apiKey = "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"
+        self.api_key = "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"
 
         self.client = OpenAI(api_key=self.api_key)
 
@@ -70,8 +60,6 @@ class GPT():
             ],
             model="gpt-3.5-turbo",
         )
-
-        # fiveQuestions = chat_completion.choices[0].message.content
         retString = chat_completion.choices[0].message.content
         retArr = retString.splitlines()
 
@@ -79,3 +67,9 @@ class GPT():
         return retArr
 
 
+if __name__ == "__main__":
+    llama = LLAMA()
+    gpt = GPT()
+    caption = "A dog playing with a football in a field"
+    print(llama.getFiveQuestions(caption))
+    print(gpt.getFiveQuestions(caption))

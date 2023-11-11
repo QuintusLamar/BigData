@@ -26,6 +26,7 @@ def run_BLIP(image):
 
     # img_path = os.path.join("../images/", "imhere1k.jpg")
     # raw_image = cv2.imread(img_path)
+
     raw_image = cv2.cvtColor(numpy.array(image), cv2.COLOR_RGB2BGR)
     cap = get_caption(model_cpu, processor, raw_image)
     return cap

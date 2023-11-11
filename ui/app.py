@@ -20,7 +20,6 @@ uploaded_file = st.file_uploader("Choose the image you would like described.")
 
 if uploaded_file is not None:
 
-    model_output = ""
     file_extension = uploaded_file.name.split('.')[-1].lower()
 
     if file_extension not in ['jpg', 'jpeg', 'png']:
@@ -31,7 +30,8 @@ if uploaded_file is not None:
 
         image = Image.open(uploaded_file)
 
-        st.image(image, caption="Uploaded Image.", use_column_width=True)
+        model_output = ""
+        st.image(image, use_column_width=True)
 
         if st.button("Run on model"):
 
@@ -40,11 +40,7 @@ if uploaded_file is not None:
             with st.spinner("Running ..."):
 
                 model_output = run_BLIP(image)
+                placeholder.success("Done...")
 
-                placeholder.success("Model finished")
-
-if st.button("Play"):
-    if model_output == "":
-        st.error("No output to play")
-    else:
-        st.audio(text_to_speech(model_output))
+            if model_output != "":
+                st.write(model_output)

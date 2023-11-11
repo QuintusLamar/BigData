@@ -1,20 +1,50 @@
 import streamlit as st
+from gtts import gTTS
+from io import BytesIO
 from PIL import Image
+from models.BLIP import run_BLIP
+
+
+def text_to_speech(text):
+    audio_bytes = BytesIO()
+    tts = gTTS(text=text, lang="en")
+    tts.write_to_fp(audio_bytes)
+    audio_bytes.seek(0)
+    return audio_bytes.read()
+
 
 st.title("Our application")
 
+model_output = ""
 uploaded_file = st.file_uploader("Choose the image you would like described.")
 
 if uploaded_file is not None:
 
+    model_output = ""
     file_extension = uploaded_file.name.split('.')[-1].lower()
+
     if file_extension not in ['jpg', 'jpeg', 'png']:
+
         st.error("Please upload a valid JPG or PNG file.")
+
     else:
+
         image = Image.open(uploaded_file)
 
         st.image(image, caption="Uploaded Image.", use_column_width=True)
 
-        st.write("Image Metadata:")
-        st.write(f"File Name: {uploaded_file.name}")
-        st.write(f"Image Size: {image.size[0]}x{image.size[1]} pixels")
+        if st.button("Run on model"):
+
+            placeholder = st.empty()
+
+            with st.spinner("Running ..."):
+
+                model_output = run_BLIP(image)
+
+                placeholder.success("Model finished")
+
+if st.button("Play"):
+    if model_output == "":
+        st.error("No output to play")
+    else:
+        st.audio(text_to_speech(model_output))

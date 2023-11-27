@@ -16,7 +16,15 @@ def text_to_speech(text):
 
 st.title("Our application")
 
-model_output = ""
+if "model_output" not in st.session_state.keys():
+    st.session_state.model_output = ""
+
+if "vqa_output" not in st.session_state.keys():
+    st.session_state.vqa_output = ""
+
+if "file_name" not in st.session_state.keys():
+    st.session_state.file_name = ""
+
 uploaded_file = st.file_uploader("Choose the image you would like described.")
 
 model = st.selectbox("Select the model you would like to use.", ["BLIP", "GIT"])
@@ -28,30 +36,39 @@ model_type = st.selectbox(
 model_type = model_type.lower()
 
 if uploaded_file is not None:
+    if st.session_state.file_name != uploaded_file.name:
+        st.session_state.vqa_output = ""
+        st.session_state.model_output = ""
+    st.session_state.file_name = uploaded_file.name
+
     file_extension = uploaded_file.name.split(".")[-1].lower()
     if file_extension not in ["jpg", "jpeg", "png"]:
         st.error("Please upload a valid JPG or PNG file.")
     else:
         image = Image.open(uploaded_file)
-        model_output = ""
         st.image(image, use_column_width=True)
         if st.button("Run on model"):
-            placeholder = st.empty()
+            st.session_state.model_output = ""
+            # placeholder = st.empty()
             with st.spinner("Running ..."):
                 model_output = get_caption(image, model, model_type)
-                placeholder.success("Done...")
-            if model_output != "":
-                st.write(model_output)
-
-        question = st.text_input(label="Enter your question")
-        if len(question) == 0:
-            st.error("Please enter a question")
-        else:
+                st.session_state.model_output = model_output
+                # placeholder.success("Done...")
+        
+        if st.session_state.model_output != "":
+            st.text_area("Model Output" , st.session_state.model_output)
+            st.audio(text_to_speech(st.session_state.model_output))
+            question = st.text_input(label="Enter your question about the image")
             if st.button("Get answer"):
-                placeholder = st.empty()
-                with st.spinner("Running ..."):
-                    model_output = get_vqa(image, question, model, model_type)
-                    placeholder.success("Done...")
-                if model_output != "":
-                    st.write(model_output)
-                    # st.audio(text_to_speech(model_output))
+                if (len(question) == 0):
+                    st.error("Please enter a question.")
+                else:
+                    # placeholder = st.empty()
+                    with st.spinner("Running ..."):
+                        st.session_state.vqa_output = ""
+                        vqa_output = get_vqa(image, question, model, model_type)
+                        st.session_state.vqa_output = vqa_output
+                        # placeholder.success("Done...")
+                    if st.session_state.vqa_output != "":
+                        st.text_area("Question Answer", vqa_output)
+                        st.audio(text_to_speech(vqa_output))

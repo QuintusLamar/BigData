@@ -1,0 +1,163 @@
+[33mcommit bcacd288a512bcd54bc803daaf6dae3d8403a069[m[33m ([m[1;36mHEAD -> [m[1;32mquintus-pseudocode[m[33m)[m
+Author: QuintusLamar <qlamar3@gatech.edu>
+Date:   Fri Dec 1 17:34:54 2023 -0500
+
+    Deleting large files
+
+[33mcommit e1563e5f533565d392d9c31e1f3fad48548213d3[m
+Author: QuintusLamar <qlamar3@gatech.edu>
+Date:   Fri Dec 1 17:25:47 2023 -0500
+
+    ignoring large files
+
+[33mcommit 0e4db6d05ae7220f1f57132ef5067059f0af3687[m
+Author: QuintusLamar <qlamar3@gatech.edu>
+Date:   Fri Dec 1 17:03:21 2023 -0500
+
+    Our VQA is working and the pseudocode
+
+[33mcommit 3667d41525b45a8c658b77271d1b995226fabb10[m[33m ([m[1;31morigin/quintus-pseudocode[m[33m)[m
+Author: QuintusLamar <qlamar3@gatech.edu>
+Date:   Wed Nov 29 09:34:18 2023 -0500
+
+    pseudocode for finding best n questions generated from LLMs
+
+[33mcommit 91f57f4cbd4ab41377df42220c2e37978ddccfa3[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: 72e9827 9966859
+Author: kevin-pietruszka <70725167+kevin-pietruszka@users.noreply.github.com>
+Date:   Mon Nov 27 16:11:31 2023 -0500
+
+    Merge pull request #4 from QuintusLamar/deepak/VQA
+    
+    use session state and add boxes for text to speech
+
+[33mcommit 9966859a16ebbd1f4cf28f913c1ea303cd90e19f[m[33m ([m[1;31morigin/deepak/VQA[m[33m)[m
+Author: kevin-pietruszka <kevinpiet13@gmail.com>
+Date:   Mon Nov 27 15:38:18 2023 -0500
+
+    use session state and add boxes for text to speech
+
+[33mcommit 72e9827af506d3d9a5295928b7c781402daebf38[m
+Merge: 328a7ea 47d0bf3
+Author: Deepak Gouda <deepakgouda1729@gmail.com>
+Date:   Mon Nov 27 13:25:24 2023 -0500
+
+    Merge pull request #3 from QuintusLamar/deepak/VQA
+    
+    Deepak/vqa
+
+[33mcommit 47d0bf313958c4e2703feae3ea3073834ab52613[m[33m ([m[1;32mdeepak/VQA[m[33m)[m
+Author: kevin-pietruszka <kevinpiet13@gmail.com>
+Date:   Mon Nov 27 08:59:30 2023 -0500
+
+    Updates requirements
+
+[33mcommit f5d9b6ae4766f51a46679550bad99c6275f6560b[m
+Author: deepakgouda <deepakgouda1729@gmail.com>
+Date:   Sun Nov 26 14:20:18 2023 -0500
+
+    add : multiple model selection and VQA
+
+[33mcommit 747332cfb2cbfe39334828c92c25842a07228ce5[m
+Merge: a0a081c 328a7ea
+Author: deepakgouda <deepakgouda1729@gmail.com>
+Date:   Sun Nov 26 14:17:32 2023 -0500
+
+    fix : merge issue
+
+[33mcommit 328a7ea88aacd9d0c9a0f9c97f94b25d7a0e4944[m
+Author: kevin-pietruszka <70725167+kevin-pietruszka@users.noreply.github.com>
+Date:   Sat Nov 11 01:35:10 2023 +0000
+
+    Update README.md
+
+[33mcommit 2f2e21417d5c7689c0a7371d2eb99b6c4659dc47[m
+Merge: 113a8cb 23d35b3
+Author: kevin-pietruszka <70725167+kevin-pietruszka@users.noreply.github.com>
+Date:   Fri Nov 10 17:24:24 2023 -0800
+
+    Merge pull request #2 from QuintusLamar/streamlit
+    
+    Streamlit
+
+[33mcommit 23d35b33857b38dbaa26b7eb651f33aef8e7fa6e[m[33m ([m[1;31morigin/streamlit[m[33m)[m
+Author: kevin-pietruszka <kevinpiet13@gmail.com>
+Date:   Fri Nov 10 20:23:56 2023 -0500
+
+    runs blip
+
+[33mcommit 88cecbe657058740e63f7cd0ec9937e67081befd[m
+Author: kevin-pietruszka <kevinpiet13@gmail.com>
+Date:   Fri Nov 10 19:16:06 2023 -0500
+
+    progress
+
+[33mcommit a0a081ca6db11f2b04a8014622e1431bccec15dd[m[33m ([m[1;31morigin/deepak/Image-Captioning[m[33m)[m
+Author: deepakgouda <deepakgouda1729@gmail.com>
+Date:   Fri Nov 10 14:17:25 2023 -0500
+
+    add : gitignore
+
+[33mcommit 3bb63314e1d6f30b0b29eade7c29c9ab9a4c2590[m
+Author: kevin-pietruszka <kevinpiet13@gmail.com>
+Date:   Fri Nov 10 13:20:18 2023 -0500
+
+    moved folders
+
+[33mcommit fbf82263bee02810160a79ee626b75da86fc6131[m
+Merge: c154d18 49a8702
+Author: kevin-pietruszka <kevinpiet13@gmail.com>
+Date:   Fri Nov 10 13:19:46 2023 -0500
+
+    Merge branch 'streamlit' of github.com:QuintusLamar/BigData into streamlit
+
+[33mcommit c154d1812f56e9a3ec20311a9464c6750d9f1074[m
+Author: kevin-pietruszka <kevinpiet13@gmail.com>
+Date:   Fri Nov 10 13:19:28 2023 -0500
+
+    moved folders
+
+[33mcommit 67eb270cccc757fb99116e8abfeb77d634af7463[m
+Author: kevin-pietruszka <kevinpiet13@gmail.com>
+Date:   Fri Nov 10 13:15:31 2023 -0500
+
+    init setup
+
+[33mcommit 3951632d26f4b162ff93f9b1410a8cf13b8a08b4[m
+Author: kevin-pietruszka <kevinpiet13@gmail.com>
+Date:   Thu Nov 9 14:55:04 2023 -0500
+
+    folder setup
+
+[33mcommit 49a8702752ec8cc7a3e301d4b96c10947dbb6898[m
+Author: kevin-pietruszka <kevinpiet13@gmail.com>
+Date:   Fri Nov 10 13:15:31 2023 -0500
+
+    init setup
+
+[33mcommit 113a8cb7b159c2cca4bd2e42df8092dbb2cd9cef[m
+Merge: 20c9e2e 5f77322
+Author: kevin-pietruszka <70725167+kevin-pietruszka@users.noreply.github.com>
+Date:   Fri Nov 10 10:11:47 2023 -0800
+
+    Merge pull request #1 from QuintusLamar/deepak/Image-Captioning
+    
+    add : BLIP - Image2Text
+
+[33mcommit 5f7732200a6dfdc26c0a0de02540dd2d956e4575[m
+Author: deepakgouda <deepakgouda1729@gmail.com>
+Date:   Thu Nov 9 15:11:08 2023 -0500
+
+    add : BLIP - Image2Text
+
+[33mcommit 2daac76332091cff516af6f1675b7ab80586c9e3[m
+Author: kevin-pietruszka <kevinpiet13@gmail.com>
+Date:   Thu Nov 9 14:55:04 2023 -0500
+
+    folder setup
+
+[33mcommit 20c9e2e88437a7045261b6fa1d8da45ed6546461[m
+Author: QuintusLamar <77808627+QuintusLamar@users.noreply.github.com>
+Date:   Mon Oct 30 12:15:10 2023 -0400
+
+    Initial commit

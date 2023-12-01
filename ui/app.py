@@ -5,6 +5,12 @@ from PIL import Image
 from models.BLIP import get_caption
 from models.BLIP import get_vqa
 
+from models.LLaMA import LLaMA
+from models.Mistral import Mistral
+
+replicate_api_key = ""
+llama = LLaMA(replicate_api_key)
+mistral = Mistral(replicate_api_key)
 
 def text_to_speech(text):
     audio_bytes = BytesIO()
@@ -35,6 +41,11 @@ model_type = st.selectbox(
 )
 model_type = model_type.lower()
 
+llm_type = st.selectbox(
+    "Select the model size you would like to use.", ["LLaMA-2-70B", "Mistral-7B"]
+)
+llm_type = llm_type.lower()
+
 if uploaded_file is not None:
     if st.session_state.file_name != uploaded_file.name:
         st.session_state.vqa_output = ""
@@ -53,6 +64,10 @@ if uploaded_file is not None:
             with st.spinner("Running ..."):
                 model_output = get_caption(image, model, model_type)
                 st.session_state.model_output = model_output
+                questions_list_1 = llama.get_questions(model_output, num_questions=5)
+                questions_list_2 = mistral.get_questions(model_output, num_questions=5)
+                print(questions_list_1)
+                print(questions_list_2)
                 # placeholder.success("Done...")
         
         if st.session_state.model_output != "":

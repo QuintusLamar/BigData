@@ -12,6 +12,7 @@ replicate_api_key = ""
 llama = LLaMA(replicate_api_key)
 mistral = Mistral(replicate_api_key)
 
+
 def text_to_speech(text):
     audio_bytes = BytesIO()
     tts = gTTS(text=text, lang="en")
@@ -69,13 +70,13 @@ if uploaded_file is not None:
                 print(questions_list_1)
                 print(questions_list_2)
                 # placeholder.success("Done...")
-        
+
         if st.session_state.model_output != "":
-            st.text_area("Model Output" , st.session_state.model_output)
+            st.text_area("Model Output", st.session_state.model_output)
             st.audio(text_to_speech(st.session_state.model_output))
             question = st.text_input(label="Enter your question about the image")
             if st.button("Get answer"):
-                if (len(question) == 0):
+                if len(question) == 0:
                     st.error("Please enter a question.")
                 else:
                     # placeholder = st.empty()

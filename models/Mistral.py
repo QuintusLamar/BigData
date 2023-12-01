@@ -1,9 +1,10 @@
 import replicate
 import os
 
-class Mistral():
+
+class Mistral:
     def __init__(self, api_key):
-        self.model_name="mistralai/mistral-7b-instruct-v0.1:83b6a56e7c828e667f21fd596c338fd4f0039b46bcfa18d973e8e70e455fda70"
+        self.model_name = "mistralai/mistral-7b-instruct-v0.1:83b6a56e7c828e667f21fd596c338fd4f0039b46bcfa18d973e8e70e455fda70"
         self.debug = False
         self.top_k = 50
         self.top_p = 0.9
@@ -14,20 +15,19 @@ class Mistral():
         os.environ["REPLICATE_API_TOKEN"] = api_key
 
     def get_questions(self, caption, num_questions=5):
-        # caption = "A dog playing with a football in a field"
         prompt = f"Given the following caption, generate {num_questions} questions about the picture that you can ask a Visual Question and Answer Model. |{caption}|"
 
         output = replicate.run(
-        self.model_name,
-        input={
-            "debug": self.debug,
-            "top_k": self.top_k,
-            "top_p": self.top_p,
-            "prompt": prompt,
-            "temperature": self.temperature,
-            "max_new_tokens": self.max_new_tokens,
-            "min_new_tokens": self.min_new_tokens,
-        }
+            self.model_name,
+            input={
+                "debug": self.debug,
+                "top_k": self.top_k,
+                "top_p": self.top_p,
+                "prompt": prompt,
+                "temperature": self.temperature,
+                "max_new_tokens": self.max_new_tokens,
+                "min_new_tokens": self.min_new_tokens,
+            },
         )
 
         res = []
@@ -38,6 +38,7 @@ class Mistral():
         print(question_list)
         question_list = [q.strip() for q in question_list if len(q) > 0]
         return question_list
+
 
 if __name__ == "__main__":
     mistral = Mistral()

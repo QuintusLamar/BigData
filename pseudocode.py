@@ -46,9 +46,8 @@ def calculate_scores(scores_arr, sentences_a, sentences_b, model):
 def remove_questions(scores_arr, question_a, question_b):
   to_remove = []
 
-  # Find all of the scores that should be removed
-  # Need to do this first, as removing as we go in the same loop will possibly skip back to back removable sentences
   for score in scores_arr:
+    threshold = 0.7
     # If we want to implement threshold, we can have the following:
     # if cosine(score[0], question_a) < threshold or cosine(score[1], question_b) < threshold
 
@@ -64,22 +63,20 @@ def remove_questions(scores_arr, question_a, question_b):
     scores_arr.remove(score)
   return scores_arr
 
-model = SentenceTransformer('bert-base-nli-mean-tokens')
 
-scores = []
+def chooseBestNQuestions(first, second, n):
+  scores = []
+  model = SentenceTransformer('bert-base-nli-mean-tokens')
+  pairs = calculate_scores(scores, first, second, model)
+  new_scores = sorted(pairs, key=lambda x: x[2], reverse=True)
+  chosen = []
+  while len(chosen) < n:
+    chosen_score = new_scores[0]
+    chosen.append(chosen_score[0])
+    new_scores.remove(chosen_score)
+    new_scores = remove_questions(new_scores, chosen_score[0], chosen_score[1])
+  
+  return chosen
 
-first_pair = calculate_scores(scores, first_model, second_model, model)
-second_pair = calculate_scores(first_pair, first_model, third_model, model)
-third_pair = calculate_scores(second_pair, second_model, third_model, model)
-
-new_scores = sorted(third_pair, key=lambda x: x[2], reverse=True)
-
-chosen = []
-# If we want to change number of chosen questions, just change the 3 to n and specify n
-while len(chosen) < 3:
-  chosen_score = new_scores[0]
-  chosen.append(chosen_score)
-  new_scores.remove(chosen_score)
-  new_scores = remove_questions(new_scores, chosen_score[0], chosen_score[1])
-
-print(chosen)
+chosen = chooseBestNQuestions(first_model, second_model, 3)
+print("Chosen: ", chosen)

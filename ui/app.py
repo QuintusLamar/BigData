@@ -86,9 +86,10 @@ if uploaded_file is not None:
                     response = mistral.get_complete_summary(qna_list)
                 else:
                     response = llama.get_complete_summary(qna_list)
+                response = "".join(response)
                 print(response)
                 st.session_state.final_response = response
-                placeholder.success(response[0])
+                placeholder.success(response)
 
         if st.session_state.model_output != "":
             st.text_area("Model Output", st.session_state.model_output)

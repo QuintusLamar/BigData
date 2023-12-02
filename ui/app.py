@@ -120,5 +120,5 @@ if uploaded_file is not None:
                         st.session_state.vqa_output = vqa_output
                         # placeholder.success("Done...")
                     if st.session_state.vqa_output != "":
-                        st.text_area("Question Answer", vqa_output)
-                        st.audio(text_to_speech(vqa_output))
+                        st.text_area("Question Answer", st.session_state.vqa_output)
+                        st.audio(text_to_speech(st.session_state.vqa_output))

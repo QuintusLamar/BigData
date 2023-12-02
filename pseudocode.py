@@ -78,5 +78,6 @@ def chooseBestNQuestions(first, second, n):
   
   return chosen
 
-chosen = chooseBestNQuestions(first_model, second_model, 3)
-print("Chosen: ", chosen)
+if __name__ == "__main__":
+  chosen = chooseBestNQuestions(first_model, second_model, 3)
+  print("Chosen: ", chosen)

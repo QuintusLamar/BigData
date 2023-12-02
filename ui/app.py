@@ -19,7 +19,7 @@ if not os.path.exists(log_folder):
     os.makedirs(log_folder)
 logger.add(os.path.join(log_folder, log_file), enqueue=True)
 
-replicate_api_key = "r8_9Z0lAWqXcxalEKmhwqEEG7lKZUxuhK81GGaTO"
+replicate_api_key = "r8_TNoIA5wIRHm9v4jUgwkcpNaSqkHURB23PhkK8"
 llama = LLaMA(replicate_api_key)
 mistral = Mistral(replicate_api_key)
 

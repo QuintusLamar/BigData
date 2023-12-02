@@ -14,9 +14,7 @@ class Mistral:
         self.min_new_tokens = -1
         os.environ["REPLICATE_API_TOKEN"] = api_key
 
-    def get_questions(self, caption, num_questions=5):
-        prompt = f"Given the following caption, generate {num_questions} questions about the picture that you can ask a Visual Question and Answer Model. |{caption}|"
-
+    def call_llm(self, prompt):
         output = replicate.run(
             self.model_name,
             input={
@@ -34,10 +32,26 @@ class Mistral:
         for o in output:
             res.append(o)
 
-        question_list = "".join(res).splitlines()
-        print(question_list)
-        question_list = [q.strip() for q in question_list if len(q) > 0]
-        return question_list
+        return "".join(res).splitlines()
+
+    def get_questions(self, caption, num_questions=5):
+        prompt = f"Given the following caption, generate {num_questions} questions about the picture that you can ask a Visual Question and Answer Model. |{caption}|"
+
+        question_list = self.call_llm(prompt)
+        # print(question_list)
+        res = []
+        for q in question_list:
+            if len(q) == 0:
+                continue
+            if q[-1] != "?":
+                continue
+            res.append(q.strip()[3:])
+        return res
+
+    def get_complete_summary(self, qna_list):
+        prompt = f"Given the following questions and answers, generate a detailed summary of the image. |{' '.join(qna_list)}|"
+        respone = self.call_llm(prompt)
+        return respone
 
 
 if __name__ == "__main__":

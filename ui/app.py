@@ -8,6 +8,8 @@ from models.BLIP import get_vqa
 from models.LLaMA import LLaMA
 from models.Mistral import Mistral
 
+from pseudocode import chooseBestNQuestions
+
 replicate_api_key = ""
 llama = LLaMA(replicate_api_key)
 mistral = Mistral(replicate_api_key)
@@ -32,6 +34,9 @@ if "vqa_output" not in st.session_state.keys():
 if "file_name" not in st.session_state.keys():
     st.session_state.file_name = ""
 
+if "final_response" not in st.session_state.keys():
+    st.session_state.final_response = ""
+
 uploaded_file = st.file_uploader("Choose the image you would like described.")
 
 model = st.selectbox("Select the model you would like to use.", ["BLIP", "GIT"])
@@ -43,7 +48,8 @@ model_type = st.selectbox(
 model_type = model_type.lower()
 
 llm_type = st.selectbox(
-    "Select the model size you would like to use.", ["LLaMA-2-70B", "Mistral-7B"]
+    "Select the model you would like to use for summarization.",
+    ["LLaMA-2-70B", "Mistral-7B"],
 )
 llm_type = llm_type.lower()
 
@@ -69,6 +75,22 @@ if uploaded_file is not None:
                 questions_list_2 = mistral.get_questions(model_output, num_questions=5)
                 print(questions_list_1)
                 print(questions_list_2)
+                questions_list = chooseBestNQuestions(
+                    questions_list_1, questions_list_2, 5
+                )
+                print(questions_list)
+
+                qna_list = []
+                for question in questions_list:
+                    vqa_output = get_vqa(image, question, model, model_type)
+                    qna_list.append(f"Question: {question}, Answer: {vqa_output}")
+                print(qna_list)
+                if llm_type == "mistral-7b":
+                    response = mistral.get_complete_summary(qna_list)
+                else:
+                    response = llama.get_complete_summary(qna_list)
+                print(response)
+                st.session_state.final_response = response
                 # placeholder.success("Done...")
 
         if st.session_state.model_output != "":

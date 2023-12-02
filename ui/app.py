@@ -67,18 +67,15 @@ if uploaded_file is not None:
         st.image(image, use_column_width=True)
         if st.button("Run on model"):
             st.session_state.model_output = ""
-            # placeholder = st.empty()
+            placeholder = st.empty()
             with st.spinner("Running ..."):
                 model_output = get_caption(image, model, model_type)
                 st.session_state.model_output = model_output
                 questions_list_1 = llama.get_questions(model_output, num_questions=5)
                 questions_list_2 = mistral.get_questions(model_output, num_questions=5)
-                print(questions_list_1)
-                print(questions_list_2)
                 questions_list = chooseBestNQuestions(
                     questions_list_1, questions_list_2, 5
                 )
-                print(questions_list)
 
                 qna_list = []
                 for question in questions_list:
@@ -91,7 +88,7 @@ if uploaded_file is not None:
                     response = llama.get_complete_summary(qna_list)
                 print(response)
                 st.session_state.final_response = response
-                # placeholder.success("Done...")
+                placeholder.success(response[0])
 
         if st.session_state.model_output != "":
             st.text_area("Model Output", st.session_state.model_output)

@@ -14,6 +14,16 @@ from models.support.VQAModel import ImgEncoder, QstEncoder, VqaModel, ImgAttenti
 from models.support.VQADataset import VqaDataset, Args, get_loader
 from models.resources.helper_functions import tokenize, load_str_list, resize_image
 
+import datetime
+import os
+from loguru import logger
+
+log_folder = "logs"
+log_file = f"{datetime.datetime.now().strftime('%Y-%m-%d-%H:%M:%S')}.log"
+if not os.path.exists(log_folder):
+    os.makedirs(log_folder)
+logger.add(os.path.join(log_folder, log_file), enqueue=True)
+
 replicate_api_key = "r8_TNoIA5wIRHm9v4jUgwkcpNaSqkHURB23PhkK8"
 llama = LLaMA(replicate_api_key)
 mistral = Mistral(replicate_api_key)
@@ -61,6 +71,7 @@ if uploaded_file is not None:
     if st.session_state.file_name != uploaded_file.name:
         st.session_state.vqa_output = ""
         st.session_state.model_output = ""
+        st.session_state.final_response = ""
     st.session_state.file_name = uploaded_file.name
 
     file_extension = uploaded_file.name.split(".")[-1].lower()
@@ -71,7 +82,7 @@ if uploaded_file is not None:
         st.image(image, use_column_width=True)
         if st.button("Run on model"):
             st.session_state.model_output = ""
-            placeholder = st.empty()
+            # placeholder = st.empty()
             with st.spinner("Running ..."):
                 model_output = get_caption(image, model, model_type)
                 st.session_state.model_output = model_output
@@ -85,15 +96,19 @@ if uploaded_file is not None:
                 for question in questions_list:
                     vqa_output = get_vqa(image, question, model, model_type)
                     qna_list.append(f"Question: {question}, Answer: {vqa_output}")
-                print(qna_list)
+                logger.info(f"questions: {qna_list}")
                 if llm_type == "mistral-7b":
                     response = mistral.get_complete_summary(qna_list)
                 else:
                     response = llama.get_complete_summary(qna_list)
                 response = "".join(response)
-                print(response)
+                logger.info(f"summary: {response}")
                 st.session_state.final_response = response
-                placeholder.success(response)
+                # placeholder.success(response)
+
+        if st.session_state.final_response != "":
+            st.text_area("Image summary: ", st.session_state.final_response)
+            st.audio(text_to_speech(st.session_state.final_response))
 
         if st.session_state.model_output != "":
             st.text_area("Model Output", st.session_state.model_output)
@@ -110,5 +125,5 @@ if uploaded_file is not None:
                         st.session_state.vqa_output = vqa_output
                         # placeholder.success("Done...")
                     if st.session_state.vqa_output != "":
-                        st.text_area("Question Answer", vqa_output)
-                        st.audio(text_to_speech(vqa_output))
+                        st.text_area("Question Answer", st.session_state.vqa_output)
+                        st.audio(text_to_speech(st.session_state.vqa_output))

@@ -46,7 +46,7 @@ class LLAMA():
 
 class GPT():
     def __init__(self):
-        self.api_key = "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"
+        self.api_key = ""
 
         self.client = OpenAI(api_key=self.api_key)
 

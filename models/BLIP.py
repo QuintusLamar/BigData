@@ -144,6 +144,7 @@ def get_vqa(image, question, model="blip", model_type="base"):
     # logger.info(f"Using {model}-{model_type}")
     raw_image = np.array(image)
     raw_image = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
+
     if model.lower() == "blip":
         answer = get_blip_vqa(raw_image, question, model_type=model_type)
     elif model.lower() == "git":

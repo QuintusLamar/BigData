@@ -64,7 +64,7 @@ vqa_model = vqa_model.lower()
 #     "Select the model size you would like to use.", ["Base", "Large"]
 # )
 # model_type = model_type.lower()
-model_type = "Base"
+model_type = "large"
 
 llm_type = st.selectbox(
     "Select the model you would like to use for summarization.",
@@ -99,7 +99,7 @@ if uploaded_file is not None:
 
                 qna_list = []
                 for question in questions_list:
-                    vqa_output = get_vqa(image, question, model, vqa_model)
+                    vqa_output = get_vqa(image, question, vqa_model)
                     qna_list.append(f"Question: {question}, Answer: {vqa_output}")
                 # logger.info(f"questions: {qna_list}")
                 if llm_type == "mistral-7b":
@@ -126,7 +126,7 @@ if uploaded_file is not None:
                     # placeholder = st.empty()
                     with st.spinner("Running ..."):
                         st.session_state.vqa_output = ""
-                        vqa_output = get_vqa(image, question, model, vqa_model)
+                        vqa_output = get_vqa(image, question, vqa_model)
                         st.session_state.vqa_output = vqa_output
                         # placeholder.success("Done...")
                     if st.session_state.vqa_output != "":

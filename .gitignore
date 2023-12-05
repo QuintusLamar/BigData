@@ -179,3 +179,7 @@ Image-Captioning/*.ipynb
 Image-Captioning/zero-shot-image-to-text/
 .DS_Store
 *.jpg
+*.jpeg
+*.png
+*.npy
+*.pt

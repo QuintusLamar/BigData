@@ -1,7 +1,7 @@
 import torchvision.transforms as transforms
 import torch.utils.data as data
 import numpy as np
-from support.VocabDictionary import VocabDict
+from models.support.VocabDictionary import VocabDict
 import torch
 import re
 
@@ -11,7 +11,7 @@ SENTENCE_SPLIT_REGEX = re.compile(r'(\W+)')
 
 class Args:
 	model_name = 'best_model'
-	input_dir = './resources'
+	input_dir = './models/resources'
 	log_dir = 'logs'
 	model_dir = 'models'
 	max_qst_length = 30
@@ -28,7 +28,7 @@ class Args:
 	num_workers = 8
 	save_step = 1
 	resume_epoch = 15
-	saved_model = './resources/best_model.pt'
+	saved_model = './models/resources/best_model.pt'
 
 
 # Data Loader
@@ -36,8 +36,8 @@ class VqaDataset(data.Dataset):
 	def __init__(self, input_dir, input_vqa, max_qst_length=30, max_num_ans=10, transform=None):
 		self.input_dir = input_dir
 		self.vqa = np.load(input_dir+'/'+input_vqa, allow_pickle=True)
-		self.qst_vocab = VocabDict('./resources/vocab_questions.txt')
-		self.ans_vocab = VocabDict('./resources/vocab_answers.txt')
+		self.qst_vocab = VocabDict('./models/resources/vocab_questions.txt')
+		self.ans_vocab = VocabDict('./models/resources/vocab_answers.txt')
 		self.max_qst_length = max_qst_length
 		self.max_num_ans = max_num_ans
 		self.load_ans = ('valid_answers' in self.vqa[0]) and (self.vqa[0]['valid_answers'] is not None)

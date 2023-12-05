@@ -22,9 +22,10 @@ log_folder = "logs"
 log_file = f"{datetime.datetime.now().strftime('%Y-%m-%d-%H:%M:%S')}.log"
 if not os.path.exists(log_folder):
     os.makedirs(log_folder)
-logger.add(os.path.join(log_folder, log_file), enqueue=True)
+# logger.add(os.path.join(log_folder, log_file), enqueue=True)
 
-replicate_api_key = "r8_TNoIA5wIRHm9v4jUgwkcpNaSqkHURB23PhkK8"
+# replicate_api_key = "r8_TNoIA5wIRHm9v4jUgwkcpNaSqkHURB23PhkK8"
+replicate_api_key = "r8_b33fH7MCWgcXlvU7q3GknZ9oo1N1lbC3YuUbK"
 llama = LLaMA(replicate_api_key)
 mistral = Mistral(replicate_api_key)
 
@@ -53,13 +54,17 @@ if "final_response" not in st.session_state.keys():
 
 uploaded_file = st.file_uploader("Choose the image you would like described.")
 
-model = st.selectbox("Select the model you would like to use.", ["BLIP", "GIT"])
+model = st.selectbox("Select the captioning model you would like to use.", ["BLIP", "GIT"])
 model = model.lower()
 
-model_type = st.selectbox(
-    "Select the model size you would like to use.", ["Base", "Large"]
-)
-model_type = model_type.lower()
+vqa_model = st.selectbox("Select the VQA model you would like to use.", ["BLIP", "GIT", "BiGRU"])
+vqa_model = vqa_model.lower()
+
+# model_type = st.selectbox(
+#     "Select the model size you would like to use.", ["Base", "Large"]
+# )
+# model_type = model_type.lower()
+model_type = "Base"
 
 llm_type = st.selectbox(
     "Select the model you would like to use for summarization.",
@@ -94,15 +99,15 @@ if uploaded_file is not None:
 
                 qna_list = []
                 for question in questions_list:
-                    vqa_output = get_vqa(image, question, model, model_type)
+                    vqa_output = get_vqa(image, question, model, vqa_model)
                     qna_list.append(f"Question: {question}, Answer: {vqa_output}")
-                logger.info(f"questions: {qna_list}")
+                # logger.info(f"questions: {qna_list}")
                 if llm_type == "mistral-7b":
                     response = mistral.get_complete_summary(qna_list)
                 else:
                     response = llama.get_complete_summary(qna_list)
                 response = "".join(response)
-                logger.info(f"summary: {response}")
+                # logger.info(f"summary: {response}")
                 st.session_state.final_response = response
                 # placeholder.success(response)
 
@@ -121,7 +126,7 @@ if uploaded_file is not None:
                     # placeholder = st.empty()
                     with st.spinner("Running ..."):
                         st.session_state.vqa_output = ""
-                        vqa_output = get_vqa(image, question, model, model_type)
+                        vqa_output = get_vqa(image, question, model, vqa_model)
                         st.session_state.vqa_output = vqa_output
                         # placeholder.success("Done...")
                     if st.session_state.vqa_output != "":

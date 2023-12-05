@@ -1,4 +1,4 @@
-from resources.helper_functions import tokenize, load_str_list, resize_image
+from models.resources.helper_functions import tokenize, load_str_list, resize_image
 
 class VocabDict:
   def __init__(self, vocab_file):

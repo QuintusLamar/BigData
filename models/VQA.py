@@ -10,10 +10,10 @@ import torch.utils.data as data
 import torchvision.transforms as transforms
 import torchvision.models as models
 
-from support.VocabDictionary import VocabDict
-from support.VQAModel import ImgEncoder, QstEncoder, VqaModel, ImgAttentionEncoder, Attention, SANModel
-from support.VQADataset import VqaDataset, Args, get_loader
-from resources.helper_functions import tokenize, load_str_list, resize_image
+from models.support.VocabDictionary import VocabDict
+from models.support.VQAModel import ImgEncoder, QstEncoder, VqaModel, ImgAttentionEncoder, Attention, SANModel
+from models.support.VQADataset import VqaDataset, Args, get_loader
+from models.resources.helper_functions import tokenize, load_str_list, resize_image
 
 # Works without function if we want
 # args = Args()
@@ -85,13 +85,13 @@ def generateAnswer(img, question):
 		num_workers=args.num_workers
 	)
 
-	q_vocab = VocabDict('./resources/vocab_questions.txt')
+	q_vocab = VocabDict('./models/resources/vocab_questions.txt')
 	max_q_length = 30
 	tokens = tokenize(question)
 	q2idc = np.array([q_vocab.word2idx('<pad>')] * max_q_length) 
 	q2idc[:len(tokens)] = [q_vocab.word2idx(w) for w in tokens]
 
-	model = torch.load('./resources/best_model.pt', map_location=torch.device('cpu'))
+	model = torch.load('./models/resources/best_model.pt', map_location=torch.device('cpu'))
 	test_q = torch.from_numpy(q2idc)
 
 	test_q = torch.from_numpy(q2idc)

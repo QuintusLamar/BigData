@@ -5,7 +5,7 @@
 To run our model, you will need to download the files in this google drive folder: [Model folder](https://drive.google.com/drive/folders/1oz2Jd2Mz7uHh82SrrkYeMrmesfW4QYQ2?usp=sharing). Then after the files have been installed put them in the `./models/resources ` directory. The other models are automatically downloaded in code or are on api calls.
 
 ### Environment
-We recommend setting up an environment in python with venv to run our code and install the pip packages needed this can be done with the following lines of code (except windows):
+We recommend setting up an environment in python with venv to run our code and install the pip packages needed this can be done with the following lines in the terminal (except windows):
 ```
 python3 -m venv env
 ```

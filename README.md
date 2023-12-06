@@ -46,4 +46,4 @@ The first time the applicaton is started the BLIP and GIT models will be downloa
  Input Image | BLIP | GIT | Our Model+BLIP | Our Model+Bi-GRU | 
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![image](./images/img_20.png) | a photograph of a dog sleeping on a couch|a dog is sleeping on the back seat of a car|[Result 1](./results/img_20_1.md)|[Result 2](./results/img_20_2.md)|
-![image](./images/img_24.png)|a photograph of two horses standing in a field| two white horses standing next to each other| [Result 1](./results/img_20_1.md) |[Result 2](./results/img_20_2.md)|
+![image](./images/img_24.png)|a photograph of two horses standing in a field| two white horses standing next to each other| [Result 1](./results/img_24_1.md) |[Result 2](./results/img_24_2.md)|
